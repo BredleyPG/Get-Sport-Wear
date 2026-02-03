@@ -1,0 +1,1037 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Get Sport Wear — Home</title>
+
+  <style>
+    :root{
+      /* Identidade: bege premium + caramelo/marrom (vibe Cult Gaia / editorial clean) */
+      --bg:#f5efe8;          /* fundo bege */
+      --paper:#fbf7f2;       /* cartões / superfícies */
+      --ink:#2a1f1a;         /* texto principal (marrom bem escuro) */
+      --muted:rgba(42,31,26,.62);
+      --line:rgba(42,31,26,.16);
+
+      --accent:#8b6b55;      /* caramelo */
+      --accent2:#6f5646;     /* marrom */
+      --glass:rgba(245,239,232,.72);
+
+      --shadow:0 24px 60px rgba(0,0,0,.14);
+      --radius:18px;
+      --radius2:26px;
+      --ease:cubic-bezier(.2,.8,.2,1);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      /* corpo limpo */
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:var(--bg);
+      color:var(--ink);
+      letter-spacing:.2px;
+    }
+    a{color:inherit; text-decoration:none}
+    button{font:inherit}
+
+    /* ---------- TOP NAV ---------- */
+    .topbar{
+      position:fixed;
+      inset:0 0 auto 0;
+      z-index:50;
+      padding:18px clamp(16px, 3vw, 40px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      transition:all .45s var(--ease);
+      /* mais “clean”, como no ref */
+      background:linear-gradient(to bottom, rgba(245,239,232,.78), rgba(245,239,232,0));
+      backdrop-filter: blur(10px);
+    }
+    .topbar.scrolled{
+      background:rgba(245,239,232,.88);
+      box-shadow: 0 10px 30px rgba(0,0,0,.05);
+      border-bottom:1px solid var(--line);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:150px;
+    }
+    .brand .logo{
+      /* logo editorial */
+      font-family: Georgia, "Times New Roman", Times, serif;
+      font-weight:600;
+      letter-spacing:2.6px;
+      font-size:13px;
+      text-transform:uppercase;
+    }
+    .navlinks{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      font-size:11px;
+      letter-spacing:2.2px;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+    .navlinks a{
+      padding:10px 6px;
+      border-radius:999px;
+      transition:all .25s var(--ease);
+    }
+    .navlinks a:hover{color:var(--ink); background:rgba(42,31,26,.05)}
+    .actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:150px;
+      justify-content:flex-end;
+    }
+    .iconbtn{
+      width:40px;height:40px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(251,247,242,.7);
+      backdrop-filter: blur(10px);
+      display:grid;
+      place-items:center;
+      transition:transform .25s var(--ease), background .25s var(--ease);
+      cursor:pointer;
+      color:var(--ink);
+    }
+    .iconbtn:hover{transform:translateY(-1px); background:rgba(251,247,242,.9)}
+    .badge{
+      position:relative;
+    }
+    .badge::after{
+      content: attr(data-badge);
+      position:absolute;
+      top:-6px; right:-6px;
+      min-width:18px;
+      height:18px;
+      padding:0 5px;
+      border-radius:999px;
+      background:var(--ink);
+      color:var(--bg);
+      font-size:11px;
+      display:grid;
+      place-items:center;
+      border:2px solid var(--bg);
+    }
+
+    /* ---------- HERO (FULL SCREEN) ---------- */
+    .hero{
+      position:relative;
+      height:100svh;
+      min-height:680px;
+      overflow:hidden;
+      background:var(--bg);
+    }
+    .heroTrack{
+      height:100%;
+      display:flex;
+      transition:transform .85s var(--ease);
+      will-change:transform;
+    }
+    .slide{
+      position:relative;
+      flex:0 0 100%;
+      height:100%;
+      overflow:hidden;
+    }
+    .media{
+      position:absolute;
+      inset:0;
+      transform:scale(1.03);
+      will-change:transform;
+    }
+    .media img, .media video{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      filter:saturate(1.02) contrast(1.02);
+    }
+
+    /* overlay mais quente (caramelo) */
+    .overlay{
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(1200px 600px at 25% 60%, rgba(42,31,26,.26), rgba(42,31,26,.08) 45%, rgba(42,31,26,.00) 65%),
+        linear-gradient(to bottom, rgba(42,31,26,.18), rgba(42,31,26,.08) 45%, rgba(42,31,26,.12));
+      pointer-events:none;
+    }
+
+    .heroContent{
+      position:absolute;
+      inset:auto auto 10% clamp(16px, 3vw, 40px);
+      z-index:2;
+      max-width:min(560px, 88vw);
+      color:#fff;
+    }
+    .kicker{
+      font-size:11px;
+      letter-spacing:2.6px;
+      text-transform:uppercase;
+      opacity:.92;
+      margin-bottom:10px;
+    }
+    .headline{
+      /* editorial (serif) */
+      font-family: Georgia, "Times New Roman", Times, serif;
+      font-size:clamp(38px, 5vw, 64px);
+      line-height:0.92;
+      letter-spacing:-.2px;
+      font-weight:600;
+      margin:0 0 16px;
+      text-shadow:0 20px 60px rgba(0,0,0,.22);
+      text-transform:uppercase;
+    }
+    .sub{
+      margin:0 0 22px;
+      color:rgba(255,255,255,.86);
+      font-size:14px;
+      line-height:1.65;
+      max-width:48ch;
+    }
+    .ctaRow{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .btn{
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.46);
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      padding:12px 18px;
+      cursor:pointer;
+      transition: transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease);
+      backdrop-filter: blur(10px);
+      letter-spacing:2px;
+      text-transform:uppercase;
+      font-size:11px;
+    }
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.12)}
+    .btn.primary{
+      background:#fff;
+      color:var(--ink);
+      border-color:#fff;
+    }
+    .btn.primary:hover{background:rgba(255,255,255,.92)}
+
+    .heroControls{
+      position:absolute;
+      inset:auto 0 22px 0;
+      z-index:3;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:0 clamp(16px, 3vw, 40px);
+      pointer-events:none;
+    }
+    .dots{
+      display:flex; gap:8px; align-items:center;
+      pointer-events:auto;
+    }
+    .dot{
+      width:40px; height:2px;
+      background:rgba(255,255,255,.28);
+      border-radius:999px;
+      overflow:hidden;
+      cursor:pointer;
+      position:relative;
+    }
+    .dot > i{
+      position:absolute; inset:0;
+      transform:translateX(-100%);
+      background:rgba(255,255,255,.9);
+      transition:transform .85s var(--ease);
+    }
+    .dot.active > i{transform:translateX(0)}
+    .arrows{
+      display:flex; gap:10px;
+      pointer-events:auto;
+    }
+    .arrow{
+      width:44px; height:44px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.42);
+      background:rgba(0,0,0,.14);
+      color:#fff;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition:transform .25s var(--ease), background .25s var(--ease);
+      backdrop-filter: blur(10px);
+    }
+    .arrow:hover{transform:translateY(-1px); background:rgba(0,0,0,.22)}
+
+    /* ---------- SECTIONS ---------- */
+    main{
+      position:relative;
+      z-index:1;
+    }
+    .section{
+      padding: clamp(34px, 5vw, 72px) clamp(16px, 3vw, 40px);
+    }
+    .sectionHead{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:18px;
+    }
+    .sectionTitle{
+      margin:0;
+      font-weight:600;
+      letter-spacing:2.2px;
+      text-transform:uppercase;
+      font-size:11px;
+      color:var(--muted);
+    }
+    .sectionBig{
+      margin:6px 0 0;
+      font-family: Georgia, "Times New Roman", Times, serif;
+      font-size: clamp(22px, 2.2vw, 28px);
+      letter-spacing:-.1px;
+      line-height:1.25;
+      font-weight:600;
+      color:var(--ink);
+    }
+    .viewAll{
+      font-size:11px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:var(--muted);
+      border-bottom:1px solid transparent;
+      padding-bottom:2px;
+      transition:all .25s var(--ease);
+    }
+    .viewAll:hover{color:var(--ink); border-bottom-color:var(--ink)}
+
+    /* ---------- FEED (GRID 4x2) ---------- */
+.feed{
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap:14px;
+  overflow: visible;
+  padding-bottom:0;
+  scroll-snap-type: none;
+  -webkit-overflow-scrolling: auto;
+}
+.feed::-webkit-scrollbar{height:0}
+
+/* responsivo */
+@media (max-width: 980px){
+  .feed{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px){
+  .feed{ grid-template-columns: 1fr; }
+}
+    .feed::-webkit-scrollbar{height:8px}
+    .feed::-webkit-scrollbar-thumb{background:rgba(42,31,26,.14); border-radius:999px}
+    .card{
+      scroll-snap-align:start;
+      border-radius:var(--radius2);
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:rgba(251,247,242,.76);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.05);
+      transform:translateY(10px);
+      opacity:0;
+      transition:transform .9s var(--ease), opacity .9s var(--ease);
+    }
+    .card.in{transform:translateY(0); opacity:1}
+    .mediaBox{
+      position:relative;
+      aspect-ratio: 3/4;
+      overflow:hidden;
+      background:#e8e1db;
+    }
+
+    /* troca de pose */
+    .swapImg{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      transition:opacity .55s var(--ease), transform .85s var(--ease);
+      will-change:opacity, transform;
+    }
+    .swapImg.b{opacity:0}
+    .card:hover .swapImg.a{opacity:0; transform:scale(1.02)}
+    .card:hover .swapImg.b{opacity:1; transform:scale(1.02)}
+
+    .cardBody{
+      padding:14px 14px 16px;
+      display:grid;
+      gap:6px;
+    }
+    .pname{
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase
+    }
+    .pmeta{
+      display:flex; justify-content:space-between; gap:10px; align-items:center;
+      color:var(--muted);
+      font-size:12px
+    }
+    .price{color:var(--ink); font-weight:700}
+    .miniRow{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      margin-top:6px;
+    }
+    .quick{
+      border-radius:999px;
+      border:1px solid rgba(42,31,26,.26);
+      background:rgba(251,247,242,.82);
+      padding:9px 12px;
+      cursor:pointer;
+      transition: transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease);
+      font-size:11px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:var(--ink);
+    }
+    .quick:hover{
+      transform:translateY(-1px);
+      background:rgba(251,247,242,.96);
+      border-color:rgba(42,31,26,.36);
+    }
+    .sizes{
+      display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .size{
+      width:30px; height:30px;
+      display:grid; place-items:center;
+      border-radius:999px;
+      border:1px solid rgba(42,31,26,.22);
+      background:rgba(251,247,242,.72);
+      font-size:11px;
+      cursor:pointer;
+      transition:all .2s var(--ease);
+      user-select:none;
+      color:var(--ink);
+    }
+    .size:hover{background:rgba(42,31,26,.05)}
+    .size.active{
+      background:var(--ink);
+      color:var(--bg);
+      border-color:var(--ink)
+    }
+
+    /* ---------- GRID CATEGORIAS ---------- */
+    .cats{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+      margin-top:16px;
+    }
+    .cat{
+      position:relative;
+      border-radius:var(--radius2);
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:#eee;
+      min-height:360px;
+      box-shadow: 0 16px 40px rgba(0,0,0,.07);
+      transform:translateY(12px);
+      opacity:0;
+      transition:transform .9s var(--ease), opacity .9s var(--ease);
+    }
+    .cat.in{transform:translateY(0); opacity:1}
+    .cat img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      transform:scale(1.02);
+      transition:transform 1.2s var(--ease);
+    }
+    .cat:hover img{transform:scale(1.06)}
+    .catLabel{
+      position:absolute;
+      inset:auto 16px 16px 16px;
+      padding:14px 14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.36);
+      background:rgba(42,31,26,.18);
+      color:#fff;
+      backdrop-filter: blur(10px);
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .catLabel b{
+      font-size:11px;
+      letter-spacing:2.6px;
+      text-transform:uppercase;
+      font-family: Georgia, "Times New Roman", Times, serif;
+      font-weight:700;
+    }
+    .catLabel span{
+      font-size:11px;
+      opacity:.9;
+      letter-spacing:2px;
+      text-transform:uppercase;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer{
+      border-top:1px solid var(--line);
+      padding:28px clamp(16px, 3vw, 40px);
+      color:var(--muted);
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+      font-size:12px;
+    }
+
+    /* ---------- RESPONSIVO ---------- */
+    @media (max-width: 980px){
+      .navlinks{display:none}
+      .heroContent{inset:auto 16px 10% 16px}
+      .cats{grid-template-columns: 1fr; }
+      .cat{min-height:420px}
+      .feed{grid-auto-columns:minmax(200px, 1fr)}
+    }
+
+    /* ---------- REDUZ MOVIMENTO ---------- */
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none !important; animation:none !important; scroll-behavior:auto !important}
+      .media{transform:none}
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP NAV -->
+  <header class="topbar" id="topbar">
+    <div class="brand">
+      <div class="logo">GET SPORT WEAR</div>
+    </div>
+
+    <nav class="navlinks">
+      <a href="#novidades">Novidades</a>
+      <a href="#destaques">Destaques</a>
+      <a href="#colecao">Coleção</a>
+      <a href="#outlet">Outlet</a>
+    </nav>
+
+    <div class="actions">
+      <button class="iconbtn" aria-label="Buscar" title="Buscar">
+        <!-- lupa -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <button class="iconbtn badge" id="cartBtn" data-badge="0" aria-label="Carrinho" title="Carrinho">
+        <!-- sacola -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M7 9V7a5 5 0 0 1 10 0v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M6.5 9h11l1 12.5a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 5.5 21.5L6.5 9Z" stroke="currentColor" stroke-width="1.8" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero">
+    <div class="heroTrack" id="heroTrack">
+
+      <!-- Slide 1 (Imagem) -->
+      <article class="slide">
+        <div class="media">
+          <img src="assets/hero-1.jpg" alt="Campanha editorial" />
+        </div>
+        <div class="overlay"></div>
+
+        <div class="heroContent">
+          <div class="kicker">Coleção • Outono/Inverno</div>
+          <h1 class="headline">ELEMENTAL</h1>
+          <p class="sub">Silhuetas limpas, tecido com presença e acabamento de alto padrão. Luxo minimalista no detalhe.</p>
+          <div class="ctaRow">
+            <a class="btn primary" href="#destaques">Shop now</a>
+            <a class="btn" href="#colecao">Ver coleção</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Slide 2 (Vídeo) -->
+      <article class="slide">
+        <div class="media">
+          <video src="assets/hero-2.mp4" autoplay muted playsinline loop></video>
+        </div>
+        <div class="overlay"></div>
+
+        <div class="heroContent">
+          <div class="kicker">Last call</div>
+          <h2 class="headline">SUMMER SALE</h2>
+          <p class="sub">Vídeo no hero = sensação premium instantânea. Movimento sutil e foco total na peça.</p>
+          <div class="ctaRow">
+            <a class="btn primary" href="#outlet">Ver outlet</a>
+            <button class="btn" id="toggleVideo">Pausar vídeo</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="heroControls">
+      <div class="dots" id="dots">
+        <div class="dot active" data-i="0"><i></i></div>
+        <div class="dot" data-i="1"><i></i></div>
+      </div>
+
+      <div class="arrows">
+        <button class="arrow" id="prev" aria-label="Anterior">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M15 6 9 12l6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="arrow" id="next" aria-label="Próximo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="m9 6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- DESTAQUES / FEED -->
+    <section class="section" id="destaques">
+      <div class="sectionHead">
+        <div>
+          <p class="sectionTitle">Destaques</p>
+          <h3 class="sectionBig">Produtos com “vida”: hover troca pose e vende mais.</h3>
+        </div>
+        <a class="viewAll" href="#">Ver tudo</a>
+      </div>
+
+      <div class="feed" id="productFeed">
+        <!-- CARD 1 -->
+        <article class="card reveal">
+          <div class="mediaBox">
+            <img class="swapImg a" src="assets/p1-a.jpg" alt="Produto — pose 1">
+            <img class="swapImg b" src="assets/p1-b.jpg" alt="Produto — pose 2">
+          </div>
+          <div class="cardBody">
+            <div class="pname">Vestido Iris</div>
+            <div class="pmeta">
+              <span class="muted">Linhas limpas</span>
+              <span class="price">R$ 489</span>
+            </div>
+            <div class="miniRow">
+              <button class="quick addToCart"
+                data-id="vestido-iris"
+                data-name="Vestido Iris"
+                data-price="489"
+                data-img="assets/p1-a.jpg">
+                Add
+              </button>
+              <div class="sizes" data-sizes>
+                <div class="size active" data-size="P">P</div>
+                <div class="size" data-size="M">M</div>
+                <div class="size" data-size="G">G</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 2 -->
+        <article class="card reveal">
+          <div class="mediaBox">
+            <img class="swapImg a" src="assets/p2-a.jpg" alt="Produto — pose 1">
+            <img class="swapImg b" src="assets/p2-b.jpg" alt="Produto — pose 2">
+          </div>
+          <div class="cardBody">
+            <div class="pname">Conjunto Aura</div>
+            <div class="pmeta">
+              <span class="muted">Textura premium</span>
+              <span class="price">R$ 559</span>
+            </div>
+            <div class="miniRow">
+              <button class="quick addToCart"
+                data-id="conjunto-aura"
+                data-name="Conjunto Aura"
+                data-price="559"
+                data-img="assets/p2-a.jpg">
+                Add
+              </button>
+              <div class="sizes" data-sizes>
+                <div class="size active" data-size="P">P</div>
+                <div class="size" data-size="M">M</div>
+                <div class="size" data-size="G">G</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 3 -->
+        <article class="card reveal">
+          <div class="mediaBox">
+            <img class="swapImg a" src="assets/p3-a.jpg" alt="Produto — pose 1">
+            <img class="swapImg b" src="assets/p3-b.jpg" alt="Produto — pose 2">
+          </div>
+          <div class="cardBody">
+            <div class="pname">Camisa Line</div>
+            <div class="pmeta">
+              <span class="muted">Corte perfeito</span>
+              <span class="price">R$ 329</span>
+            </div>
+            <div class="miniRow">
+              <button class="quick addToCart"
+                data-id="camisa-line"
+                data-name="Camisa Line"
+                data-price="329"
+                data-img="assets/p3-a.jpg">
+                Add
+              </button>
+              <div class="sizes" data-sizes>
+                <div class="size active" data-size="P">P</div>
+                <div class="size" data-size="M">M</div>
+                <div class="size" data-size="G">G</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 4 -->
+        <article class="card reveal">
+          <div class="mediaBox">
+            <img class="swapImg a" src="assets/p4-a.jpg" alt="Produto — pose 1">
+            <img class="swapImg b" src="assets/p4-b.jpg" alt="Produto — pose 2">
+          </div>
+          <div class="cardBody">
+            <div class="pname">Calça Noire</div>
+            <div class="pmeta">
+              <span class="muted">Alfaiataria</span>
+              <span class="price">R$ 419</span>
+            </div>
+            <div class="miniRow">
+              <button class="quick addToCart"
+                data-id="calca-noire"
+                data-name="Calça Noire"
+                data-price="419"
+                data-img="assets/p4-a.jpg">
+                Add
+              </button>
+              <div class="sizes" data-sizes>
+                <div class="size active" data-size="P">P</div>
+                <div class="size" data-size="M">M</div>
+                <div class="size" data-size="G">G</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 5 -->
+        <article class="card reveal">
+          <div class="mediaBox">
+            <img class="swapImg a" src="assets/p4-a.jpg" alt="Produto — pose 1">
+            <img class="swapImg b" src="assets/p4-b.jpg" alt="Produto — pose 2">
+          </div>
+          <div class="cardBody">
+            <div class="pname">Calça Noire</div>
+            <div class="pmeta">
+              <span class="muted">Alfaiataria</span>
+              <span class="price">R$ 419</span>
+            </div>
+            <div class="miniRow">
+              <button class="quick addToCart"
+                data-id="calca-noire"
+                data-name="Calça Noire"
+                data-price="419"
+                data-img="assets/p4-a.jpg">
+                Add
+              </button>
+              <div class="sizes" data-sizes>
+                <div class="size active" data-size="P">P</div>
+                <div class="size" data-size="M">M</div>
+                <div class="size" data-size="G">G</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 6 -->
+        <article class="card reveal">
+          <div class="mediaBox">
+            <img class="swapImg a" src="assets/p4-a.jpg" alt="Produto — pose 1">
+            <img class="swapImg b" src="assets/p4-b.jpg" alt="Produto — pose 2">
+          </div>
+          <div class="cardBody">
+            <div class="pname">Calça Noire</div>
+            <div class="pmeta">
+              <span class="muted">Alfaiataria</span>
+              <span class="price">R$ 419</span>
+            </div>
+            <div class="miniRow">
+              <button class="quick addToCart"
+                data-id="calca-noire"
+                data-name="Calça Noire"
+                data-price="419"
+                data-img="assets/p4-a.jpg">
+                Add
+              </button>
+              <div class="sizes" data-sizes>
+                <div class="size active" data-size="P">P</div>
+                <div class="size" data-size="M">M</div>
+                <div class="size" data-size="G">G</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 7 -->
+        <article class="card reveal">
+          <div class="mediaBox">
+            <img class="swapImg a" src="assets/p4-a.jpg" alt="Produto — pose 1">
+            <img class="swapImg b" src="assets/p4-b.jpg" alt="Produto — pose 2">
+          </div>
+          <div class="cardBody">
+            <div class="pname">Calça Noire</div>
+            <div class="pmeta">
+              <span class="muted">Alfaiataria</span>
+              <span class="price">R$ 419</span>
+            </div>
+            <div class="miniRow">
+              <button class="quick addToCart"
+                data-id="calca-noire"
+                data-name="Calça Noire"
+                data-price="419"
+                data-img="assets/p4-a.jpg">
+                Add
+              </button>
+              <div class="sizes" data-sizes>
+                <div class="size active" data-size="P">P</div>
+                <div class="size" data-size="M">M</div>
+                <div class="size" data-size="G">G</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 8 -->
+        <article class="card reveal">
+          <div class="mediaBox">
+            <img class="swapImg a" src="assets/p4-a.jpg" alt="Produto — pose 1">
+            <img class="swapImg b" src="assets/p4-b.jpg" alt="Produto — pose 2">
+          </div>
+          <div class="cardBody">
+            <div class="pname">Calça Noire</div>
+            <div class="pmeta">
+              <span class="muted">Alfaiataria</span>
+              <span class="price">R$ 419</span>
+            </div>
+            <div class="miniRow">
+              <button class="quick addToCart"
+                data-id="calca-noire"
+                data-name="Calça Noire"
+                data-price="419"
+                data-img="assets/p4-a.jpg">
+                Add
+              </button>
+              <div class="sizes" data-sizes>
+                <div class="size active" data-size="P">P</div>
+                <div class="size" data-size="M">M</div>
+                <div class="size" data-size="G">G</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CATEGORIAS -->
+    <section class="section" id="colecao">
+      <div class="sectionHead">
+        <div>
+          <p class="sectionTitle">Coleção</p>
+          <h3 class="sectionBig">Blocos grandes e respirando. Luxo minimalista, foco na peça.</h3>
+        </div>
+      </div>
+
+      <div class="cats">
+        <a class="cat reveal" href="#">
+          <img src="assets/cat-1.jpg" alt="Calças">
+          <div class="catLabel">
+            <b>Calças</b>
+            <span>Explorar</span>
+          </div>
+        </a>
+
+        <a class="cat reveal" href="#">
+          <img src="assets/cat-2.jpg" alt="Conjuntos">
+          <div class="catLabel">
+            <b>Conjuntos</b>
+            <span>Explorar</span>
+          </div>
+        </a>
+
+        <a class="cat reveal" href="#">
+          <img src="assets/cat-3.jpg" alt="Vestidos">
+          <div class="catLabel">
+            <b>Vestidos</b>
+            <span>Explorar</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- OUTLET -->
+    <section class="section" id="outlet">
+      <div class="sectionHead">
+        <div>
+          <p class="sectionTitle">Outlet</p>
+          <h3 class="sectionBig">Últimas unidades — mantendo estética premium até no desconto.</h3>
+        </div>
+        <a class="viewAll" href="#">Ver ofertas</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>© <span id="year"></span> Get Sport Wear. Todos os direitos reservados.</div>
+    <div>Política • Trocas • Contato</div>
+  </footer>
+
+  <script>
+    // ---------- TOPBAR SCROLL ----------
+    const topbar = document.getElementById("topbar");
+    const onScroll = () => {
+      if (window.scrollY > 12) topbar.classList.add("scrolled");
+      else topbar.classList.remove("scrolled");
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    // ---------- HERO SLIDER ----------
+    const heroTrack = document.getElementById("heroTrack");
+    const dots = [...document.querySelectorAll(".dot")];
+    const nextBtn = document.getElementById("next");
+    const prevBtn = document.getElementById("prev");
+    const toggleVideoBtn = document.getElementById("toggleVideo");
+
+    let heroIndex = 0;
+    const heroSlides = 2;
+
+    function setHero(i){
+      heroIndex = (i + heroSlides) % heroSlides;
+      heroTrack.style.transform = `translateX(-${heroIndex * 100}%)`;
+      dots.forEach(d => d.classList.remove("active"));
+      dots[heroIndex].classList.add("active");
+    }
+    nextBtn.addEventListener("click", () => setHero(heroIndex + 1));
+    prevBtn.addEventListener("click", () => setHero(heroIndex - 1));
+    dots.forEach(d => d.addEventListener("click", () => setHero(+d.dataset.i)));
+
+    // auto play hero (premium: lento)
+    let heroTimer = setInterval(() => setHero(heroIndex + 1), 6500);
+    ["mouseenter","touchstart"].forEach(evt => {
+      document.querySelector(".hero").addEventListener(evt, () => clearInterval(heroTimer), {passive:true});
+    });
+
+    // pausar vídeo do slide 2
+    const heroVideo = document.querySelector(".slide video");
+    if (toggleVideoBtn && heroVideo){
+      toggleVideoBtn.addEventListener("click", () => {
+        if (heroVideo.paused){ heroVideo.play(); toggleVideoBtn.textContent = "Pausar vídeo"; }
+        else { heroVideo.pause(); toggleVideoBtn.textContent = "Reproduzir vídeo"; }
+      });
+    }
+
+    // ---------- REVEAL ON SCROLL ----------
+    const revealEls = document.querySelectorAll(".reveal");
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting){
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+
+    // ---------- TAMANHOS (P/M/G) ----------
+    document.querySelectorAll("[data-sizes]").forEach(group => {
+      group.addEventListener("click", (ev) => {
+        const btn = ev.target.closest(".size");
+        if (!btn) return;
+        group.querySelectorAll(".size").forEach(s => s.classList.remove("active"));
+        btn.classList.add("active");
+      });
+    });
+
+    // ---------- CARRINHO (localStorage) ----------
+    const CART_KEY = "cart";
+    const cartBtn = document.getElementById("cartBtn");
+
+    function getCart(){
+      try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+      catch { return []; }
+    }
+    function setCart(items){
+      localStorage.setItem(CART_KEY, JSON.stringify(items));
+      updateBadge();
+    }
+    function updateBadge(){
+      const cart = getCart();
+      const qty = cart.reduce((acc, it) => acc + (it.qty || 1), 0);
+      cartBtn.setAttribute("data-badge", String(qty));
+    }
+    updateBadge();
+
+    // add to cart com size selecionado
+    document.querySelectorAll(".addToCart").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const card = btn.closest(".card");
+        const activeSize = card.querySelector(".size.active")?.dataset.size || "M";
+
+        const item = {
+          id: btn.dataset.id,
+          name: btn.dataset.name,
+          price: Number(btn.dataset.price),
+          img: btn.dataset.img,
+          size: activeSize,
+          qty: 1
+        };
+
+        const cart = getCart();
+        const idx = cart.findIndex(x => x.id === item.id && x.size === item.size);
+
+        if (idx >= 0) cart[idx].qty += 1;
+        else cart.push(item);
+
+        setCart(cart);
+
+        // feedback premium
+        btn.textContent = "Adicionado ✓";
+        btn.style.transform = "translateY(-1px)";
+        setTimeout(() => { btn.textContent = "Add"; btn.style.transform = ""; }, 900);
+      });
+    });
+
+    // ano footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

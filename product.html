@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Get Sportwear — Produto</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header__inner">
+    <a class="logo" href="index.html">GET SPORTWEAR</a>
+
+    <nav class="nav">
+      <a href="collections.html">Coleções</a>
+      <a href="index.html#manifesto">Manifesto</a>
+      <a href="cart.html">Carrinho</a>
+    </nav>
+
+    <div class="actions">
+      <a class="pill" href="cart.html">Carrinho <b data-cart-count>0</b></a>
+    </div>
+  </div>
+</header>
+
+<main class="section container">
+  <div class="product-page">
+    <div class="product-photo reveal">
+      <div class="product-photo__inner"></div>
+    </div>
+
+    <div class="product-panel">
+      <p class="eyebrow reveal">GET SPORTWEAR</p>
+      <h1 class="product-title reveal" id="pName">Produto</h1>
+      <p class="p reveal" id="pDesc">Descrição do produto com estética editorial e foco em acabamento.</p>
+
+      <div class="product-meta reveal">
+        <span id="pPrice">R$ 0,00</span>
+      </div>
+
+      <div class="cta reveal">
+        <button class="btn btn--primary" id="addToCart">Adicionar ao carrinho</button>
+        <a class="btn" href="collections.html">Voltar</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="js/app.js"></script>
+<script>
+  const catalog = {
+    "1": { id:"1", name:"Top Motion", price:169.90, desc:"Tecido leve, linhas retas e acabamento premium." },
+    "2": { id:"2", name:"Legging Flow", price:219.90, desc:"Compressão confortável e visual clean." },
+    "3": { id:"3", name:"Jaqueta Air", price:299.90, desc:"Minimal, técnica e com presença editorial." },
+    "4": { id:"4", name:"Short Pulse", price:139.90, desc:"Leve, versátil e com corte preciso." },
+    "5": { id:"5", name:"Top Aura", price:159.90, desc:"Estrutura firme com toque suave." },
+    "6": { id:"6", name:"Legging Pulse", price:229.90, desc:"Performance e elegância sem ruído." },
+    "7": { id:"7", name:"Corta-vento Air", price:259.90, desc:"Camada leve, acabamento e proteção." },
+    "8": { id:"8", name:"Short Flow", price:129.90, desc:"Movimento livre e estética clean." },
+  };
+
+  const params = new URLSearchParams(location.search);
+  const id = params.get("id") || "1";
+  const p = catalog[id] || catalog["1"];
+
+  document.getElementById("pName").textContent = p.name;
+  document.getElementById("pDesc").textContent = p.desc;
+  document.getElementById("pPrice").textContent = `R$ ${p.price.toFixed(2).replace(".", ",")}`;
+
+  document.getElementById("addToCart").addEventListener("click", () => {
+    window.Cart.add({ id: p.id, name: p.name, price: p.price });
+  });
+</script>
+</body>
+</html>
