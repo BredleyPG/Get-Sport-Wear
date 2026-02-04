@@ -318,24 +318,24 @@
     .viewAll:hover{color:var(--ink); border-bottom-color:var(--ink)}
 
     /* ---------- FEED (GRID 4x2) ---------- */
-.feed{
-  display:grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap:14px;
-  overflow: visible;
-  padding-bottom:0;
-  scroll-snap-type: none;
-  -webkit-overflow-scrolling: auto;
-}
-.feed::-webkit-scrollbar{height:0}
+    .feed{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap:14px;
+      overflow: visible;
+      padding-bottom:0;
+      scroll-snap-type: none;
+      -webkit-overflow-scrolling: auto;
+    }
+    .feed::-webkit-scrollbar{height:0}
 
-/* responsivo */
-@media (max-width: 980px){
-  .feed{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 560px){
-  .feed{ grid-template-columns: 1fr; }
-}
+    /* responsivo */
+    @media (max-width: 980px){
+      .feed{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px){
+      .feed{ grid-template-columns: 1fr; }
+    }
     .feed::-webkit-scrollbar{height:8px}
     .feed::-webkit-scrollbar-thumb{background:rgba(42,31,26,.14); border-radius:999px}
     .card{
@@ -488,91 +488,175 @@
       text-transform:uppercase;
     }
 
-    /* ========= INSTAGRAM FOOTER (ADICIONADO) ========= */
-    .insta-footer{
-      border-top: 1px solid var(--line);
-      padding: 64px clamp(16px, 3vw, 40px);
-      background: var(--bg);
-      color: var(--ink);
+    /* ==============================
+       FOOTER NOVO (premium + insta)
+       ============================== */
+    .siteFooter{
+      border-top:1px solid var(--line);
+      background:linear-gradient(to bottom, rgba(251,247,242,.35), rgba(245,239,232,.85));
+      padding:34px clamp(16px, 3vw, 40px);
+      color:var(--muted);
     }
-    .insta-inner{
-      max-width: 1180px;
-      margin: 0 auto;
-      display: grid;
-      gap: 28px;
+    .footerInner{ display:grid; gap:26px; }
+    .footerTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:22px;
+      flex-wrap:wrap;
     }
-    .insta-head{
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .insta-label{
-      font-size: 11px;
-      letter-spacing: 2.4px;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .insta-handle{
+    .footerBrand{ min-width:240px; }
+    .footerLogo{
       font-family: Georgia, "Times New Roman", Times, serif;
-      font-size: clamp(22px, 3vw, 30px);
-      font-weight: 600;
-      letter-spacing: .5px;
+      letter-spacing:2.6px;
+      font-size:12px;
+      text-transform:uppercase;
+      color:var(--ink);
+      font-weight:700;
     }
-    .insta-feed{
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
+    .footerTagline{
+      margin:10px 0 10px;
+      font-size:13px;
+      line-height:1.6;
+      color:var(--muted);
+      max-width:42ch;
     }
-    .insta-item{
-      position: relative;
-      aspect-ratio: 1 / 1;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 0;
-      background: rgba(251,247,242,.76);
+    .footerMail{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      font-size:12px;
+      letter-spacing:1.6px;
+      text-transform:uppercase;
+      color:var(--ink);
+      opacity:.86;
+      padding-bottom:2px;
+      border-bottom:1px solid rgba(42,31,26,.18);
     }
-    .insta-item img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform .8s var(--ease);
-      display:block;
+    .footerMail:hover{opacity:1}
+
+    .footerLinks{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
     }
-    .insta-item:hover img{
-      transform: scale(1.06);
+    .footerLinks a{
+      font-size:11px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:var(--muted);
+      padding:10px 8px;
+      border-radius:999px;
+      transition:all .25s var(--ease);
     }
-    .insta-cta{
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--muted);
-      align-self: flex-start;
-      border-bottom: 1px solid transparent;
-      padding-bottom: 2px;
-      transition: all .25s var(--ease);
-    }
-    .insta-cta:hover{
-      color: var(--ink);
-      border-bottom-color: var(--ink);
-    }
-    @media (max-width: 980px){
-      .insta-feed{ grid-template-columns: repeat(3, 1fr); }
-    }
-    @media (max-width: 560px){
-      .insta-feed{ grid-template-columns: repeat(2, 1fr); }
+    .footerLinks a:hover{
+      color:var(--ink);
+      background:rgba(42,31,26,.05);
     }
 
-    /* ---------- FOOTER ---------- */
-    footer{
-      border-top:1px solid var(--line);
-      padding:28px clamp(16px, 3vw, 40px);
+    .footerInsta{
+      border:1px solid var(--line);
+      border-radius:0; /* reto (premium clean) */
+      background:rgba(251,247,242,.72);
+      backdrop-filter: blur(10px);
+      padding:16px 16px 14px;
+      box-shadow:0 10px 30px rgba(0,0,0,.05);
+    }
+    .footerInstaHead{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:12px;
+    }
+    .footerInstaTitle{
+      font-size:11px;
+      letter-spacing:2.2px;
+      text-transform:uppercase;
       color:var(--muted);
+      font-weight:600;
+    }
+    .footerInstaHandle{
+      font-size:11px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:var(--ink);
+      opacity:.82;
+      border-bottom:1px solid transparent;
+      padding-bottom:2px;
+      transition:all .25s var(--ease);
+    }
+    .footerInstaHandle:hover{
+      opacity:1;
+      border-bottom-color:rgba(42,31,26,.25);
+    }
+
+    .instaGrid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:10px;
+    }
+    .instaItem{
+      border-radius:0; /* reto */
+      overflow:hidden;
+      border:1px solid rgba(42,31,26,.14);
+      background:#e8e1db;
+      aspect-ratio: 1 / 1;
+      position:relative;
+      transform:translateY(0);
+      transition: transform .25s var(--ease);
+    }
+    .instaItem:hover{ transform: translateY(-2px); }
+    .instaItem img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transform:scale(1.01);
+      transition:transform .75s var(--ease);
+    }
+    .instaItem:hover img{ transform:scale(1.06); }
+
+    .instaCTA{
+      display:inline-flex;
+      margin-top:12px;
+      font-size:11px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:var(--muted);
+      border-bottom:1px solid transparent;
+      padding-bottom:2px;
+      transition:all .25s var(--ease);
+    }
+    .instaCTA:hover{
+      color:var(--ink);
+      border-bottom-color:rgba(42,31,26,.22);
+    }
+
+    .footerBottom{
+      border-top:1px solid var(--line);
+      padding-top:16px;
       display:flex;
       justify-content:space-between;
-      gap:18px;
+      gap:14px;
       flex-wrap:wrap;
       font-size:12px;
-      background: var(--bg);
+    }
+    .footerLegal{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .footerLegal a{
+      color:var(--muted);
+      border-bottom:1px solid transparent;
+      padding-bottom:2px;
+      transition:all .25s var(--ease);
+    }
+    .footerLegal a:hover{
+      color:var(--ink);
+      border-bottom-color:rgba(42,31,26,.2);
     }
 
     /* ---------- RESPONSIVO ---------- */
@@ -582,6 +666,8 @@
       .cats{grid-template-columns: 1fr; }
       .cat{min-height:420px}
       .feed{grid-auto-columns:minmax(200px, 1fr)}
+      .footerLinks{justify-content:flex-start}
+      .instaGrid{grid-template-columns: repeat(2, 1fr);}
     }
 
     /* ---------- REDUZ MOVIMENTO ---------- */
@@ -984,9 +1070,61 @@
     </section>
   </main>
 
-  <footer>
-    <div>© <span id="year"></span> Get Sport Wear. Todos os direitos reservados.</div>
-    <div>Política • Trocas • Contato</div>
+  <!-- ========= FOOTER PREMIUM + INSTAGRAM ========= -->
+  <footer class="siteFooter" id="footer">
+    <div class="footerInner">
+      <div class="footerTop">
+        <div class="footerBrand">
+          <div class="footerLogo">GET SPORT WEAR</div>
+          <p class="footerTagline">Sportwear pensado para o agora.</p>
+          <a class="footerMail" href="mailto:contato@getsportwear.com">contato@getsportwear.com</a>
+        </div>
+
+        <nav class="footerLinks" aria-label="Links do rodapé">
+          <a href="#destaques">Destaques</a>
+          <a href="#colecao">Coleção</a>
+          <a href="#outlet">Outlet</a>
+        </nav>
+      </div>
+
+      <div class="footerInsta">
+        <div class="footerInstaHead">
+          <div class="footerInstaTitle">Instagram</div>
+          <a class="footerInstaHandle" href="https://www.instagram.com/get.sportwear?igsh=MXZ3NWVwc2pjN3o0bw==" target="_blank" rel="noopener">
+            @get.sportwear
+          </a>
+        </div>
+
+        <!-- Por enquanto: mock com imagens locais (depois a gente liga no feed real) -->
+        <div class="instaGrid">
+          <a class="instaItem" href="https://www.instagram.com/get.sportwear?igsh=MXZ3NWVwc2pjN3o0bw==" target="_blank" rel="noopener">
+            <img src="assets/insta-1.jpg" alt="Instagram post 1">
+          </a>
+          <a class="instaItem" href="https://www.instagram.com/get.sportwear?igsh=MXZ3NWVwc2pjN3o0bw==" target="_blank" rel="noopener">
+            <img src="assets/insta-2.jpg" alt="Instagram post 2">
+          </a>
+          <a class="instaItem" href="https://www.instagram.com/get.sportwear?igsh=MXZ3NWVwc2pjN3o0bw==" target="_blank" rel="noopener">
+            <img src="assets/insta-3.jpg" alt="Instagram post 3">
+          </a>
+          <a class="instaItem" href="https://www.instagram.com/get.sportwear?igsh=MXZ3NWVwc2pjN3o0bw==" target="_blank" rel="noopener">
+            <img src="assets/insta-4.jpg" alt="Instagram post 4">
+          </a>
+        </div>
+
+        <a class="instaCTA" href="https://www.instagram.com/get.sportwear?igsh=MXZ3NWVwc2pjN3o0bw==" target="_blank" rel="noopener">
+          Ver mais no Instagram →
+        </a>
+      </div>
+
+      <div class="footerBottom">
+        <div>© <span id="year"></span> Get Sport Wear. Todos os direitos reservados.</div>
+        <div class="footerLegal">
+          <a href="#">Política</a>
+          <a href="#">Trocas</a>
+          <a href="#">Contato</a>
+        </div>
+      </div>
+    </div>
   </footer>
 
   <script>
@@ -1105,42 +1243,8 @@
       });
     });
 
-    // ano footer
+    // ano footer (agora funciona pq o footer está acima do script)
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
-
-  <!-- ========= INSTAGRAM FOOTER (ADICIONADO) ========= -->
-  <footer class="insta-footer">
-    <div class="insta-inner">
-      <div class="insta-head">
-        <span class="insta-label">Instagram</span>
-        <a class="insta-handle" href="https://instagram.com/getsportwear" target="_blank" rel="noopener">
-          @getsportwear
-        </a>
-      </div>
-
-      <div class="insta-feed">
-        <a class="insta-item" href="https://www.instagram.com/get.sportwear?igsh=MXZ3NWVwc2pjN3o0bw==" target="_blank" rel="noopener">
-          <img src="assets/insta-1.jpg" alt="Instagram post 1">
-        </a>
-        <a class="insta-item" href="https://www.instagram.com/get.sportwear?igsh=MXZ3NWVwc2pjN3o0bw==" target="_blank" rel="noopener">
-          <img src="assets/insta-2.jpg" alt="Instagram post 2">
-        </a>
-        <a class="insta-item" href="https://www.instagram.com/get.sportwear?igsh=MXZ3NWVwc2pjN3o0bw==" target="_blank" rel="noopener">
-          <img src="assets/insta-3.jpg" alt="Instagram post 3">
-        </a>
-        <a class="insta-item" href="https://www.instagram.com/get.sportwear?igsh=MXZ3NWVwc2pjN3o0bw==" target="_blank" rel="noopener">
-          <img src="assets/insta-4.jpg" alt="Instagram post 4">
-        </a>
-        <a class="insta-item" href="https://www.instagram.com/get.sportwear?igsh=MXZ3NWVwc2pjN3o0bw==" target="_blank" rel="noopener">
-          <img src="assets/insta-5.jpg" alt="Instagram post 5">
-        </a>
-      </div>
-
-      <a class="insta-cta" href="https://www.instagram.com/get.sportwear?igsh=MXZ3NWVwc2pjN3o0bw==" target="_blank" rel="noopener">
-        Ver mais no Instagram →
-      </a>
-    </div>
-  </footer>
 </body>
 </html>
